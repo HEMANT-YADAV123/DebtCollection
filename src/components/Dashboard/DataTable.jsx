@@ -111,7 +111,7 @@ const DataTable = ({ filteredData }) => {
         </table>
       </div>
 
-      {/* Pagination */}
+      {/*Added Pagination */}
       {totalPages > 1 && (
         <div className="flex items-center justify-between mt-6 pt-4 border-t border-gray-200">
           <button

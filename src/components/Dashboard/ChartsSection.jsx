@@ -41,7 +41,7 @@ const ChartsSection = ({ filteredData }) => {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-      {/* Status Distribution Pie Chart */}
+      {/* Pie Chart(for status distribution) */}
       <div className="bg-white rounded-xl shadow-md p-6 border border-gray-200">
         <h3 className="text-lg font-semibold mb-4 text-gray-900">Payment Status Distribution</h3>
         <ResponsiveContainer width="100%" height={300}>
@@ -64,7 +64,7 @@ const ChartsSection = ({ filteredData }) => {
         </ResponsiveContainer>
       </div>
 
-      {/* Collection Rate by DPD Bar Chart */}
+      {/* collection rate by DPD Bucket. */}
       <div className="bg-white rounded-xl shadow-md p-6 border border-gray-200">
         <h3 className="text-lg font-semibold mb-4 text-gray-900">Collection Rate by DPD Bucket</h3>
         <ResponsiveContainer width="100%" height={300}>

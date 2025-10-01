@@ -7,6 +7,7 @@ import ChartsSection from './ChartsSection';
 import DataTable from './DataTable';
 import { DPD_ORDER } from '../utils/constants';
 
+//main component import all components.
 const DebtCollectionsDashboard = () => {
   const [data, setData] = useState([]);
   const [filters, setFilters] = useState({
@@ -15,7 +16,7 @@ const DebtCollectionsDashboard = () => {
     channels: []
   });
 
-  // Parse CSV
+  // parse the CSV file
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -27,7 +28,6 @@ const DebtCollectionsDashboard = () => {
       transformHeader: (header) => header.trim().toLowerCase().replace(/\s+/g, '_'),
       complete: (results) => {
         const cleanedData = results.data.map(row => {
-          // Enhanced PTP parsing to handle various formats
           let isPtp = false;
           const ptpValue = row.is_ptp || row.ptp || row.promise_to_pay;
           
@@ -63,7 +63,7 @@ const DebtCollectionsDashboard = () => {
     });
   };
 
-  // Get unique values for filters
+  // get unq value for every filter.
   const uniqueDpdBuckets = useMemo(() => {
     const buckets = [...new Set(data.map(d => d.dpd_bucket).filter(Boolean))];
     return buckets.sort((a, b) => DPD_ORDER.indexOf(a) - DPD_ORDER.indexOf(b));
@@ -73,7 +73,7 @@ const DebtCollectionsDashboard = () => {
     return [...new Set(data.map(d => d.channel).filter(Boolean))];
   }, [data]);
 
-  // Filter data
+  // filter the data based on diff-diff filters.
   const filteredData = useMemo(() => {
     return data.filter(row => {
       if (filters.dateRange.start && row.transaction_date) {
@@ -95,14 +95,14 @@ const DebtCollectionsDashboard = () => {
     });
   }, [data, filters]);
 
-  // Calculate KPIs
+  // calculate key perf Indicator(KPI)
   const kpis = useMemo(() => {
     const totalDue = filteredData.reduce((sum, row) => sum + row.amount_due, 0);
     const totalCollected = filteredData.reduce((sum, row) => sum + row.amount_paid, 0);
     const collectionRate = totalDue > 0 ? (totalCollected / totalDue) * 100 : 0;
     const uniqueCustomers = new Set(filteredData.map(row => row.customer_id)).size;
     
-    // Enhanced PTP calculation with debugging
+    // PTP calculation
     const ptpCount = filteredData.filter(row => {
       const isPtp = row.is_ptp === true;
       return isPtp;

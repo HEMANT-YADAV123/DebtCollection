@@ -22,7 +22,7 @@ const FilterPanel = ({ filters, setFilters, uniqueDpdBuckets, uniqueChannels, to
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* Date Range */}
+        {/* Dates Range */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">Date Range</label>
           <div className="flex gap-2">
