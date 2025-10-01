@@ -59,7 +59,7 @@ const DataTable = ({ filteredData }) => {
               setTableSearch(e.target.value);
               setCurrentPage(1);
             }}
-            className="px-4 py-2 border border-gray-300 rounded-lg text-sm w-64 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full sm:w-48 px-4 py-2 border border-gray-300 rounded-lg sm:text-sm text-xs focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
         </div>
       </div>
