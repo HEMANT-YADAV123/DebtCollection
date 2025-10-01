@@ -63,7 +63,7 @@ npm start
 
 - http://localhost:3000
 
-Project Structure
+# Project Structure
 ```
 src/
 ├── components/
@@ -81,20 +81,39 @@ src/
 └── App.jsx                               # Main application entry point 
 ```
 
+
+# Libraries Used
+
+- React 18: Frontend framework with hooks
+
+- Tailwind CSS: Utility-first CSS framework for styling
+
+- Recharts: Composable charting library built on React
+
+- PapaParse: CSV parsing library for handling file uploads
+
+- Lucide React: Beautiful & consistent icon toolkit
+
+- React Hooks: useState, useMemo for state management
+
+
 # CSV Data Format
+
 ## Required Columns
 - Your CSV file should include the following columns:
 
 ```
-Column	Description	Format
-transaction_id	Unique transaction identifier	String
-customer_id	Customer identifier	String
-dpd_bucket	Days Past Due bucket	String (0, 1-30, 31-60, 61-90, 90+)
-status	Payment status	String (paid, partial, failed, pending, chargeback)
-channel	Collection channel	String (email, phone, sms, etc.)
-amount_due	Total amount due	Number
-amount_paid	Amount collected	Number
-is_ptp	Promise To Pay flag	Boolean/Number/String (true/false, 1/0, yes/no)
+| Column         | Description                  | Format                                     |
+|----------------|------------------------------|--------------------------------------------|
+| transaction_id | Unique transaction identifier | String                                    |
+| customer_id    | Customer identifier           | String                                    |
+| dpd_bucket     | Days Past Due bucket          | String (0, 1-30, 31-60, 61-90, 90+)        |
+| status         | Payment status                | String (paid, partial, failed, pending, chargeback) |
+| channel        | Collection channel            | String (email, phone, sms, etc.)           |
+| amount_due     | Total amount due              | Number                                    |
+| amount_paid    | Amount collected              | Number                                    |
+| is_ptp         | Promise To Pay flag           | Number/String (true/false, 1/0, yes/no)    |
+
 ```
 
 
@@ -102,6 +121,45 @@ is_ptp	Promise To Pay flag	Boolean/Number/String (true/false, 1/0, yes/no)
 
 - transaction_date: Date of transaction (YYYY-MM-DD)
 - failure_reason: Reason for payment failure
+
+# KPI Calculations
+
+## Collection Rate
+- **Formula:**  
+  `Collection Rate = (Total Collected / Total Due) × 100`
+
+## PTP Rate
+- **Formula:**  
+  `PTP Rate = (PTP Count / Total Transactions) × 100`
+
+## Average Ticket Size
+- **Formula:**  
+  `Average Ticket = Total Due / Number of Non-Zero Transactions`
+
+## Unique Customers
+- **Formula:**  
+  `Unique Customers = Count of distinct customer_id values`
+
+---
+
+# Assumptions & Edge Cases
+
+## Data Processing
+- Empty or null values in numeric fields are treated as **0**  
+- Missing channel values are defaulted to **"(unknown)"**  
+- DPD buckets are sorted in severity order: `0 → 1-30 → 31-60 → 61-90 → 90+`  
+- PTP field supports multiple formats for flexibility  
+
+## Filtering Logic
+- Date range filtering only applies if **both start and end dates** are provided  
+- Empty filter arrays show all data (**no filtering**)  
+- Text search performs **case-insensitive partial matches** across all columns  
+
+## Calculation Edge Cases
+- **Collection rate** is `0%` when total due is `0` (to avoid division by zero)  
+- **Average ticket** excludes zero-amount transactions for meaningful calculation  
+- **PTP rate** calculation handles both **count** and **percentage display**  
+
 
 # Sample CSV Data
 
@@ -136,33 +194,6 @@ T004,CUST001,90+,failed,email,5000,0,true,2024-01-18
 - Dynamic channel list from uploaded data
 
 - Multi-select filtering
-
-# KPI Calculations
-
-## Collection Rate
-```
-Collection Rate = (Total Collected / Total Due) × 100
-```
-## PTP Rate
-
-- PTP Rate = (PTP Count / Total Transactions) × 100
-
-## Average Ticket Size
-
-- Average Ticket = Total Due / Number of Non-Zero Transactions
-
-# Technology Stack
-
-- Frontend: React 18, Tailwind CSS
-
-- Charts: Recharts
-
-- CSV Parsing: PapaParse
-
-- Icons: Lucide React
-
-- Build Tool: Create React App
-
 
 # Available Scripts
 
